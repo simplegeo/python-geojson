@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 #
-# geojson: Setup
+# fred-geojson: Setup
 #
 from setuptools import setup, find_packages
-setup(name="geojson",
+setup(name="simplegeo-geojson",
       version='0.1.0',
-      description="A geojson library",
+      description="A geojson library.",
       url="http://github.com/simplegeo/python-geojson",
       packages=find_packages(),
       include_package_data=True,
