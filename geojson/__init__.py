@@ -7,6 +7,7 @@ Notation (JSON).
 
 try:
     import simplejson as json
+    json # just to pacify pyflakes: http://divmod.org/trac/ticket/1499
 except ImportError:
     import json
 

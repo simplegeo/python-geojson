@@ -1,0 +1,8 @@
+Name                             Stmts   Miss Branch BrPart  Cover
+------------------------------------------------------------------
+geojson/__init__                   251     28     82     23    84%
+geojson/test/__init__                1      0      0      0   100%
+geojson/test/unit/__init__           1      0      0      0   100%
+geojson/test/unit/test_geojson     156      1     16      1    98%
+------------------------------------------------------------------
+TOTAL                              409     29     98     24    89%
