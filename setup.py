@@ -14,4 +14,4 @@ setup(name="simplegeo-geojson",
       keywords="json geojson",
       test_suite="geojson.test.unit",
       install_requires=['simplejson'],
-      setup_requires=['setuptools_trial', 'setuptools_pyflakes'])
+      setup_requires=['setuptools_darcs', 'setuptools_pyflakes'])
