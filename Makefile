@@ -6,8 +6,8 @@ BUILD_NUMBER ?= 1
 debian/changelog:
 	-git branch -D changelog
 	git checkout -b changelog
-	git-dch -a --debian-branch changelog --snapshot \
-            --snapshot-number=$(BUILD_NUMBER)
+	git-dch -N $(shell python setup.py --version) -a --debian-branch changelog \
+            --snapshot --snapshot-number=$(BUILD_NUMBER)
 
 dist:
 	mkdir -p $@
