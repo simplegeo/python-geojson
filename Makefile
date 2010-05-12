@@ -1,9 +1,9 @@
-BASE        ?= $(PWD)
-GIT_HEAD     = $(BASE)/.git/$(shell cut -d\  -f2-999 .git/HEAD)
 ROOTCMD      = fakeroot
 BUILD_NUMBER ?= 1
 
-debian/changelog: $(GIT_HEAD)
+.PHONY: debian/changelog
+
+debian/changelog:
 	git-dch -a --snapshot --snapshot-number=$(BUILD_NUMBER)
 
 deb: debian/changelog
