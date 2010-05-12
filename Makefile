@@ -4,7 +4,10 @@ BUILD_NUMBER ?= 1
 .PHONY: debian/changelog
 
 debian/changelog:
-	git-dch -a --snapshot --snapshot-number=$(BUILD_NUMBER)
+	-git branch -D changelog
+	git checkout -b changelog
+	git-dch -a --debian-branch changelog --snapshot \
+            --snapshot-number=$(BUILD_NUMBER)
 
 deb: debian/changelog
 	dpkg-buildpackage -r$(ROOTCMD) -us -uc -b
