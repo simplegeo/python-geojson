@@ -1,0 +1,14 @@
+Source: python-geojson
+Section: web
+Priority: extra
+Maintainer: SimpleGeo Nerds <nerds@simplegeo.com>
+Build-Depends: debhelper (>= 7), cdbs (>= 0.4.59), python-central (>= 0.6.11)
+Standards-Version: 3.8.1
+Homepage: http://github.com/simplegeo/python-geojson/
+XS-Python-Version: 2.6
+
+Package: python-geojson
+Architecture: all
+Depends: ${misc:Depends}, ${python:Depends}, python-simplejson
+Description: A geojson library.
+

@@ -1,0 +1,5 @@
+python-geojson (0.1.0) unstable; urgency=low
+
+  * Debianized.
+
+ -- Ian Eure <ian@digg.com>  Wed, 12 May 2010 09:26:00 -0700
