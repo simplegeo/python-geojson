@@ -9,8 +9,12 @@ debian/changelog:
 	git-dch -a --debian-branch changelog --snapshot \
             --snapshot-number=$(BUILD_NUMBER)
 
-deb: debian/changelog
-	dpkg-buildpackage -r$(ROOTCMD) -us -uc -b
+dist:
+	mkdir -p $@
+
+deb: debian/changelog dist
+	dpkg-buildpackage -r$(ROOTCMD) -us -uc
+	mv ../python-geojson_* dist/
 
 sdist:
 	python setup.py sdist
