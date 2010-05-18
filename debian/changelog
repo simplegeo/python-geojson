@@ -1,5 +1,11 @@
+python-geojson (0.1.1) unstable; urgency=low
+
+  * Switch to pysupport.
+
+ -- Ian Eure <ian@simplegeo.com>  Tue, 18 May 2010 15:52:45 -0700
+
 python-geojson (0.1.0) unstable; urgency=low
 
   * Debianized.
 
- -- Ian Eure <ian@digg.com>  Wed, 12 May 2010 09:26:00 -0700
+ -- Ian Eure <ian@simplegeo.com>  Wed, 12 May 2010 09:26:00 -0700
