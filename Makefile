@@ -1,4 +1,5 @@
-ROOTCMD      = fakeroot
+ROOTCMD       = fakeroot
+SIGN_KEY     ?= nerds@simplegeo.com
 BUILD_NUMBER ?= 1
 
 .PHONY: debian/changelog
@@ -13,8 +14,9 @@ dist:
 	mkdir -p $@
 
 deb: debian/changelog dist
-	dpkg-buildpackage -r$(ROOTCMD) -us -uc
-	mv ../python-geojson_* dist/
+	dpkg-buildpackage -r$(ROOTCMD) -k$(SIGN_KEY)
+	test -d dist/deb || mkdir -p dist/deb
+	mv ../python-geojson_* dist/deb
 
 sdist:
 	python setup.py sdist
