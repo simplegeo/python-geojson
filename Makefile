@@ -16,7 +16,7 @@ dist:
 deb: debian/changelog dist
 	dpkg-buildpackage -r$(ROOTCMD) -k$(SIGN_KEY)
 	test -d dist/deb || mkdir -p dist/deb
-	mv ../simplegeo-geojson_* dist/deb
+	mv ../python-simplegeo-geojson_* dist/deb
 
 sdist:
 	python setup.py sdist
