@@ -2,6 +2,7 @@ import unittest
 import random
 import geojson
 
+from decimal import Decimal as D
 
 class TestGeoJSON(unittest.TestCase):
     def assertDictEquals(self, dict1, dict2):
@@ -13,16 +14,16 @@ class TestGeoJSON(unittest.TestCase):
                 self.assertEquals(v, dict2[k])
 
     def test_point(self):
-        data = { "type": "Point", "coordinates": [100.0, 0.0] }
+        data = { "type": "Point", "coordinates": [D('100.0'), D('0.0')] }
         point = geojson.Point()
-        point.coordinates = [100.0, 0.0]
+        point.coordinates = [D('100.0'), D('0.0')]
         self.assertTrue(point.is_valid())
         for key, value in data.iteritems():
             self.assertEquals(getattr(point, key), value)
-        self.assertEquals(point.x, 100.0)
-        self.assertEquals(point.y, 0.0)
+        self.assertEquals(point.x, D('100.0'))
+        self.assertEquals(point.y, D('0.0'))
         self.assertEquals(point.z, None)
-        point.coordinates = [100.0, 0.0, 5200.0]
+        point.coordinates = [D('100.0'), D('0.0'), D('5200.0')]
         self.assertTrue(point.is_valid())
         point.coordinates = [0,1,2,3]
         self.assertTrue(point.is_valid())
@@ -37,7 +38,7 @@ class TestGeoJSON(unittest.TestCase):
     def test_linestring(self):
         data = {
             "type": "LineString",
-            "coordinates": [[100.0, 0.0], [101.0, 1.0]]
+            "coordinates": [[D('100.0'), D('0.0')], [D('101.0'), D('1.0')]]
         }
         linestring = geojson.LineString.from_dict(data)
         self.assertTrue(linestring.is_valid())
@@ -45,19 +46,19 @@ class TestGeoJSON(unittest.TestCase):
 
     def test_invalid_linestring(self):
         linestring = geojson.LineString()
-        linestring.coordinates = [100.0, 0.0]
+        linestring.coordinates = [D('100.0'), D('0.0')]
         self.assertFalse(linestring.is_valid())
-        linestring.coordinates = [[100.0, 0.0]]
+        linestring.coordinates = [[D('100.0'), D('0.0')]]
         self.assertFalse(linestring.is_valid())
-        linestring.coordinates = [[100.0]]
+        linestring.coordinates = [[D('100.0')]]
         self.assertFalse(linestring.is_valid())
 
     def test_multilinestring(self):
         data = {
             "type": "MultiLineString",
             "coordinates": [
-                [[100.0, 0.0], [101.0, 1.0]],
-                [[102.0, 2.0], [103.0, 3.0]]
+                [[D('100.0'), D('0.0')], [D('101.0'), D('1.0')]],
+                [[D('102.0'), D('2.0')], [D('103.0'), D('3.0')]]
             ]
         }
         multilinestring = geojson.MultiLineString.from_dict(data)
@@ -66,9 +67,9 @@ class TestGeoJSON(unittest.TestCase):
 
     def test_invalid_multilinestring(self):
         multilinestring = geojson.MultiLineString()
-        multilinestring.coordinates = [[100.0, 0.0]]
+        multilinestring.coordinates = [[D('100.0'), D('0.0')]]
         self.assertFalse(multilinestring.is_valid())
-        multilinestring.coordinates = [[[100.0], [101.0, 1.0]], [[102.0, 2.0], [103.0, 3.0]]]
+        multilinestring.coordinates = [[[D('100.0')], [D('101.0'), D('1.0')]], [[D('102.0'), D('2.0')], [D('103.0'), D('3.0')]]]
         self.assertFalse(multilinestring.is_valid())
         multilinestring.coordinates = []
         self.assertFalse(multilinestring.is_valid())
@@ -79,15 +80,15 @@ class TestGeoJSON(unittest.TestCase):
         data = {
             "type": "Polygon",
             "coordinates": [
-                [[100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0]]
+                [[D('100.0'), D('0.0')], [D('101.0'), D('0.0')], [D('101.0'), D('1.0')], [D('100.0'), D('1.0')], [D('100.0'), D('0.0')]]
             ]
         }
         polygon = geojson.Polygon.from_dict(data)
         self.assertTrue(polygon.is_valid())
         self.assertDictEquals(data, polygon.to_dict())
         polygon.coordinates = [
-            [[100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0]],
-            [[100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2]]
+            [[D('100.0'), D('0.0')], [D('101.0'), D('0.0')], [D('101.0'), D('1.0')], [D('100.0'), D('1.0')], [D('100.0'), D('0.0')]],
+            [[D('100.2'), D('0.2')], [D('100.8'), D('0.2')], [D('100.8'), D('0.8')], [D('100.2'), D('0.8')], [D('100.2'), D('0.2')]]
         ]
         self.assertTrue(polygon.is_valid())
 
@@ -96,21 +97,21 @@ class TestGeoJSON(unittest.TestCase):
         self.assertFalse(polygon.is_valid())
         polygon.coordinates = []
         self.assertFalse(polygon.is_valid())
-        polygon.coordinates = [[[100.0, 0.0], [101.0, 0.0], [100.0], [100.0, 0.0]]]
+        polygon.coordinates = [[[D('100.0'), D('0.0')], [D('101.0'), D('0.0')], [D('100.0')], [D('100.0'), D('0.0')]]]
         self.assertFalse(polygon.is_valid())
         polygon.coordinates = '100.0,0.0'
         self.assertFalse(polygon.is_valid())
         # Don't begin and end at same point.
-        polygon.coordinates = [[[100.0, 0.0], [101.0, 0.0], [100.0, 1.0], [100.0, 2.0]]]
+        polygon.coordinates = [[[D('100.0'), D('0.0')], [D('101.0'), D('0.0')], [D('100.0'), D('1.0')], [D('100.0'), D('2.0')]]]
         self.assertFalse(polygon.is_valid())
 
     def test_multipolygon(self):
         data = {
             "type": "MultiPolygon",
             "coordinates": [
-                [[[102.0, 2.0], [103.0, 2.0], [103.0, 3.0], [102.0, 3.0], [102.0, 2.0]]],
-                [[[100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0]],
-                 [[100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2]]]
+                [[[D('102.0'), D('2.0')], [D('103.0'), D('2.0')], [D('103.0'), D('3.0')], [D('102.0'), D('3.0')], [D('102.0'), D('2.0')]]],
+                [[[D('100.0'), D('0.0')], [D('101.0'), D('0.0')], [D('101.0'), D('1.0')], [D('100.0'), D('1.0')], [D('100.0'), D('0.0')]],
+                 [[D('100.2'), D('0.2')], [D('100.8'), D('0.2')], [D('100.8'), D('0.8')], [D('100.2'), D('0.8')], [D('100.2'), D('0.2')]]]
             ]
         }
         multipolygon = geojson.MultiPolygon.from_dict(data)
@@ -122,7 +123,7 @@ class TestGeoJSON(unittest.TestCase):
         self.assertFalse(multipolygon.is_valid())
         multipolygon.coordinates = []
         self.assertFalse(multipolygon.is_valid())
-        multipolygon.coordinates = [[[[102.0, 2.0], [103.0, 2.0], [102.0, 3.0]]]]
+        multipolygon.coordinates = [[[[D('102.0'), D('2.0')], [D('103.0'), D('2.0')], [D('102.0'), D('3.0')]]]]
         self.assertFalse(multipolygon.is_valid())
 
     def test_geometry_collection(self):
@@ -131,13 +132,13 @@ class TestGeoJSON(unittest.TestCase):
         self.assertTrue(geometries.is_valid())
         multipolygon = geojson.MultiPolygon()
         multipolygon.coordinates = [
-            [[[102.0, 2.0], [103.0, 2.0], [103.0, 3.0], [102.0, 3.0], [102.0, 2.0]]],
-            [[[100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0]],
-             [[100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2]]]
+            [[[D('102.0'), D('2.0')], [D('103.0'), D('2.0')], [D('103.0'), D('3.0')], [D('102.0'), D('3.0')], [D('102.0'), D('2.0')]]],
+            [[[D('100.0'), D('0.0')], [D('101.0'), D('0.0')], [D('101.0'), D('1.0')], [D('100.0'), D('1.0')], [D('100.0'), D('0.0')]],
+             [[D('100.2'), D('0.2')], [D('100.8'), D('0.2')], [D('100.8'), D('0.8')], [D('100.2'), D('0.8')], [D('100.2'), D('0.2')]]]
         ]
         geometries.geometries[4] = multipolygon
         multipolygon = geojson.MultiPolygon()
-        multipolygon.coordinates = [[[[102.0, 2.0], [103.0, 2.0], [103.0, 3.0], [102.0, 3.0], [102.0, 2.0]]]]
+        multipolygon.coordinates = [[[[D('102.0'), D('2.0')], [D('103.0'), D('2.0')], [D('103.0'), D('3.0')], [D('102.0'), D('3.0')], [D('102.0'), D('2.0')]]]]
         geometries.geometries.append(multipolygon)
         self.assertTrue(geometries.is_valid())
         self.assertEquals(len(geometries), 11)
@@ -146,7 +147,7 @@ class TestGeoJSON(unittest.TestCase):
 
     def test_invalid_geometry_collection(self):
         geometries = geojson.GeometryCollection()
-        geometries.geometries = [geojson.Point(coordinates=[0]), geojson.Point(coordinates=[100.0,0.0])]
+        geometries.geometries = [geojson.Point(coordinates=[0]), geojson.Point(coordinates=[D('100.0'),D('0.0')])]
         self.assertFalse(geometries.is_valid())
 
     def test_feature(self):
@@ -155,7 +156,7 @@ class TestGeoJSON(unittest.TestCase):
             "geometry": {
                 "type": "Polygon",
                 "coordinates": [[
-                    [-180.0, 10.0], [20.0, 90.0], [180.0, -5.0], [-30.0, -90.0], [-180.0, 10.0]
+                    [D('-180.0'), D('10.0')], [D('20.0'), D('90.0')], [D('180.0'), D('-5.0')], [D('-30.0'), D('-90.0')], [D('-180.0'), D('10.0')]
                 ]]
             },
             "properties": {
@@ -168,7 +169,7 @@ class TestGeoJSON(unittest.TestCase):
         self.assertTrue(feature.is_valid())
         self.assertEquals(feature.type, 'Feature')
         self.assertEquals(feature.geometry.type, 'Polygon')
-        self.assertEquals(feature.geometry.coordinates, [[[-180.0, 10.0], [20.0, 90.0], [180.0, -5.0], [-30.0, -90.0], [-180.0, 10.0]]])
+        self.assertEquals(feature.geometry.coordinates, [[[D('-180.0'), D('10.0')], [D('20.0'), D('90.0')], [D('180.0'), D('-5.0')], [D('-30.0'), D('-90.0')], [D('-180.0'), D('10.0')]]])
         self.assertEquals(feature.properties['name'], 'Beezlebum')
         self.assertEquals(feature.properties['occupation'], 'Lucador')
         self.assertEquals(feature.properties['favorite_color'], 'chartreuse')
@@ -225,7 +226,7 @@ class TestGeoJSON(unittest.TestCase):
         point = geojson.loads(s)
         self.assertTrue(point.is_valid())
         self.assertEquals(point.type, "Point")
-        self.assertEquals(point.coordinates, [0.0, 0.0])
+        self.assertEquals(point.coordinates, [D('0.0'), D('0.0')])
         self.assertEquals(geojson.dumps(point), s)
         
     def test_null_value(self):
