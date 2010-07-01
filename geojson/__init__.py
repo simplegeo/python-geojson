@@ -11,6 +11,9 @@ try:
 except ImportError:
     import json
 
+
+from decimal import Decimal
+
 # TODO:
 #  - Support for bounding boxes
 #  - Support for coordinate reference systems
@@ -180,7 +183,7 @@ class PositionField(Field):
     def validate(self, value):
         super(PositionField, self).validate(value)
         if not hasattr(value, '__len__') or len(value) < 2:
-            raise ValidationError('Value %r are not valid coordinates' % value)
+            raise ValidationError('Value %s are not valid coordinates' % self.string_for_value(value))
         try:
             lonlat = [float(i) for i in value]
             if lonlat[1] < -90 or lonlat[1] > 90:
@@ -188,7 +191,18 @@ class PositionField(Field):
             if lonlat[0] < -180 or lonlat[0] > 180:
                 raise ValidationError('Longitude must be between -180 and 180.')
         except (TypeError, ValueError):
-            raise ValidationError('Value %r are not valid coordinates' % value)
+            raise ValidationError('Value %s are not valid coordinates' % self.string_for_value(value))
+
+    def string_for_value(self, value):
+        elements = None
+        if value.__class__ is list:
+            elements = [self.string_for_value(element) for element in value]
+        elif value.__class__ is Decimal:
+            elements = float(value)
+        else:
+            elements = value
+
+        return str(elements)
 
 
 class LinearRingField(ListField):
