@@ -4,7 +4,7 @@
 #
 from setuptools import setup, find_packages
 setup(name="simplegeo-geojson",
-      version='0.1.1',
+      version='0.1.2',
       description="A geojson library.",
       url="http://github.com/simplegeo/python-geojson",
       packages=find_packages(),

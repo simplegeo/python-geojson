@@ -9,7 +9,7 @@ Homepage: http://github.com/simplegeo/python-geojson/
 
 Package: python-simplegeo-geojson
 Architecture: all
-Depends: ${misc:Depends}, ${python:Depends}, python-simplejson
+Depends: ${misc:Depends}, ${python:Depends}, python-pyutil
 Description: A geojson library.
 Conflicts: python-geojson, simplegeo-geojson
 Replaces: python-geojson, simplegeo-geojson
