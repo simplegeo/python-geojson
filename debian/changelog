@@ -1,3 +1,9 @@
+python-simplegeo-geojson (0.1.37) lucid; urgency=low
+
+  * UNRELEASED
+
+ -- SimpleGeo Nerds <nerds@simplegeo.com>  Tue, 14 Sep 2010 21:29:08 +0000
+
 python-simplegeo-geojson (0.1.4) unstable; urgency=low
 
   * Removed quotations from the error messages when a scalar type is used in the format string.
