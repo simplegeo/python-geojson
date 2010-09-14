@@ -1,8 +1,16 @@
 python-simplegeo-geojson (0.1.4) unstable; urgency=low
 
+  [ Derek Smith ]
   * Removed quotations from the error messages when a scalar type is used in the format string.
 
- -- Derek Smith <derek@simplegeo.com>  Thu, 1 July 2010 05:36:00 -0700
+  [ Ian Eure ]
+  * Run tests in the build, don't setup_require
+    setuptools_darcs/pyflakes.
+  * Fix build-dep.
+
+  [ SimpleGeo Nerds ]
+
+ -- SimpleGeo Nerds <nerds@simplegeo.com>  Tue, 14 Sep 2010 21:17:07 +0000
 
 python-simplegeo-geojson (0.1.3) unstable; urgency=low
 
