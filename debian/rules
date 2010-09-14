@@ -1,6 +1,16 @@
 #!/usr/bin/make -f
 
+ARTIFACTS ?= .
 DEB_PYTHON_SYSTEM=pysupport
 
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/python-distutils.mk
+
+build/python-simplegeo-geojson::
+	pyflakes geojson
+	python setup.py nosetests \
+		--with-xunit --xunit-file $(ARTIFACTS)/xunit.xml \
+		--with-coverage --cover-branch --cover-tests \
+		--cover-outfile $(ARTIFACTS)/coverage.xml \
+		--cover-report html --cover-directory $(ARTIFACTS)/htmlcov
+	python-coverage xml -o $(ARTIFACTS)/coverage.xml
