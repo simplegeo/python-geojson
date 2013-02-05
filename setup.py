@@ -13,4 +13,5 @@ setup(name="simplegeo-geojson",
       author_email="nerds@simplegeo.com",
       keywords="json geojson",
       test_suite="geojson.test.unit",
-      install_requires=['pyutil>=1.7.5'])
+      install_requires=['pyutil>=1.7.5',
+                        'simplejson'])
